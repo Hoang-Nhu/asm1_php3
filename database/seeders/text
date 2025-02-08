@@ -1,0 +1,33 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Faker\Factory as Faker;
+
+class ProductSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $faker = Faker::create();
+        $categories = [1, 2, 3, 4]; // Các ID của các danh mục
+
+        for ($i = 1; $i <= 20; $i++) {
+            DB::table('products')->insert([
+                'name' => $faker->word(), // Tạo tên sản phẩm ngẫu nhiên
+                'description' => $faker->sentence(), // Tạo mô tả ngẫu nhiên
+                'price' => $faker->randomFloat(2, 10, 500), // Giá ngẫu nhiên từ 10 đến 500
+                'quantity' => $faker->numberBetween(1, 100), // Số lượng ngẫu nhiên từ 1 đến 100
+                'category_id' => $faker->randomElement($categories), // Chọn ngẫu nhiên một danh mục
+                'image' => $faker->imageUrl(), // Tạo URL hình ảnh ngẫu nhiên
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+    }
+}
